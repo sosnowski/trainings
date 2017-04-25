@@ -1,27 +1,270 @@
 <html>
 <head>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600&amp;subset=latin-ext" rel="stylesheet">
     <title>Slides test</title>
 </head>
 
 <body>
-    <section style="background: red;">
+    <div id="loader" class="title">
+        <header>
+            <h1>Loading</h1>
+        </header>
+    </div>
+    <article>
+        <section class="title">
+            <header>
+                <h1>Lazy Loading for Angular</h1>
+                <h3>How to build big SPA that loads fast</h3>
+            </header>
+        </section>
+    </article>
 
-    </section>
+    <article>
+        <header>
+            <h2>What is routing in SPA?</h2>
+        </header>
+        <section class="main">
+            <img src="./assets/routing-screens.png" style="height: 70%;" class="centered"/>
+        </section>
+    </article>
 
-    <section style="background: yellow;">
+    <article>
+        <header>
+            <h2>Problem?</h2>
+            <h4>Application is one, big, monolith. The loading time might be significant</h4>
+        </header>
+        <section class="main">
+            <img src="./assets/routing-loading-monolith.png" class="centered"/>
+        </section>
+        <section>
+            <p class="centered">User is not able to do anything, until the modules are loaded</p>
+        </section>
+    </article>
 
-    </section>
+    <article>
+        <header>
+            <h2>Solution - Lazy Loading</h2>
+            <h4>Routing implies that the application is divided in to self contained modules</h4>
+        </header>
+        <section class="main">
+            <img src="./assets/routing-tree.png" class="centered"/>
+        </section>
+        <section>
+            <p class="centered">It's a good design pattern to keep modules isolated and fully independent.</p>
+        </section>
+    </article>
+    <article>
+        <header>
+            <h2>Isolated module</h2>
+        </header>
+        <section class="columns">
+        <pre style="margin-right: 1px;"><code class="language-typescript">@NgModule({
+    imports: [
+        CommonModule
+    ],
+    declarations: [
+        FundingViewComponent
+    ],
+    providers: [
+        FundingViewService
+    ]
+})
+export class FundingViewModule {}</code></pre>
+        <pre><code class="language-typescript">import {FundingViewModule} from './funding-view/funding-view.module';
 
-    <section style="background: green;">
+@NgModule({
+    imports: [
+        FundingViewModule
+    ],
+    declarations: [
+        AppComponent
+    ],
+    providers: [
+        //...
+    ]
+})
+export class AppModule {}</code></pre>
+        </section>
 
-    </section>
+        <section>
+            <p class="centered">However, this approach still does not affect the loading process</p>
+        </section>
+        <section class="main">
+            <img src="./assets/routing-loading-modules.png" class="centered"/>
+        </section>
 
-    <section style="background: blue;">
+        <section>
+            <p class="centered">So, if the modules are already isolated, do we have to load them when the application starts?</p>
+        </section>
+    </article>
 
-    </section>
+    <article>
+        <section class="title">
+            <header>
+                <h1>Lazy Loading SPA</h1>
+            </header>
+            <section class="main">
+                <img src="./assets/routing-loading-lazy.png" class="centered"/>
+            </section>
+        </section>
+    </article>
 
-    <section style="background: wheat;">
+    <article>
+        <header>
+            <h2>First: Build tools</h2>
+        </header>
+        <section class="main">
+            <img src="./assets/routing-build-chunks.png" class="centered"/>
+        </section>
+        <section>
+        <pre><code class="language-javascript">{
+    module: {
+        rules: [
+            {
+                test: /\.ts$/,
+                use: ['ng-router-loader', 'ts-loader', 'angular2-template-loader']
+            }
+        ]
+    }
+}</code></pre>
+        </section>
+    </article>
 
-    </section>
+    <article>
+        <header>
+            <h3>Isolate routing modules</h3>
+        </header>
+        <section>
+            <pre style="margin-right: 1px;"><code class="language-typescript">//app.module.ts
+import {FundingViewModule} from './funding-view/funding-view.module'; //remove!
+//...
+@NgModule({
+    imports: [
+        HttpModule,
+        FundingViewModule, //remove!
+    ]
+})
+export class AppModule {}</code></pre>
+<pre><code class="language-typescript">//navigation.configuration.ts
+import {FundingViewComponent} from './funding-view/funding-view.component'; //remove!
+
+export const NAVIGATION_CONFIGURATION: Array<RobinNavigationRoute> = [
+    //...
+    {
+        name: 'Funding View',
+        path: 'funding-view',
+        iconClass: 'business',
+        component: FundingViewComponent // remove!!,
+        loadChildren: '../../funding-view/funding-view.module#FundingViewModule' //add!
+    }
+    //...
+];</code></pre>
+    </article>
+
+    <article>
+        <header>
+            <h3>But, what component should be rendered?</h3>
+        </header>
+        <section>
+            <pre><code class="language-typescript">// funding-view.routing.ts
+import {Routes} from '@angular/router';
+import {FundingViewComponent} from './funding-view.component';
+
+export let fundingViewRoutes: Routes = [
+    // default route for the module. You can add child routes here
+    { path: '', component: FundingViewComponent }
+];</code></pre>
+<pre><code class="language-typescript">// funding-view.module.ts
+import {RouterModule} from '@angular/router';
+import {funginViewRoutes} from './funding-view.routing';
+//...
+@NgModule({
+    imports: [
+        RouterModule.forChild(funginViewRoutes)
+    ],
+    declarations: [
+        FundingViewComponent
+    ]
+})
+export class FundingViewModule {}</code></pre>
+        </section>
+    </article>
+
+    <article>
+        <header>
+            <h2>It works!</h2>
+        </header>
+        <section>
+                <img src="./assets/chunks_cmd.png" class="centered" style="margin-bottom: 0.2rem"/>
+                <img src="./assets/chunks_load.png" class="centered"/>
+        </section>
+    </article>
+
+    <article>
+        <header>
+            <h2>Loading strategies</h2>
+        </header>
+        <section>
+            <h3>Default</h3>
+            <p>Main module is loaded first. Then, modules are loaded when the corresponding route is activated.</p>
+            <h3>Preload all</h3>
+            <p>Main module is loaded first. All other the modules are loaded in the background immediately after that.</p>
+            <pre><code class="language-typescript">//app.routing.ts
+import {RouterModule, PreloadAllModules} from '@angular/router';
+//...
+@NgModule({
+    imports: [
+        RouterModule.forRoot(appRoutes, {
+            preloadingStrategy: PreloadAllModules
+        })
+    ]
+})
+export class AppRoutingModule {}
+</code></pre>
+        </section>
+    </article>
+
+    <article>
+        <header>
+            <h2>Custom preloading strategy</h2>
+        </header>
+        <section>
+            <pre><code class="language-typescript">import { PreloadingStrategy, Route } from '@angular/router';
+import { Observable } from 'rxjs/Observable';
+
+export class MyCustomPreloadingStrategy implements PreloadingStrategy {
+
+  /**
+  * route - the route to be considered
+  * load - asynchronous function that will load the module
+  * returns - an Observable
+  */
+  preload(route: Route, load: () => Observable<any>): Observable<any> {
+      // Custom loading strategy. If you decide to load the module, call the load function
+  }
+}</code></pre>
+<pre><code class="language-typescript">//app.routing.ts
+import {RouterModule} from '@angular/router';
+import {MyCustomPreloadingStrategy} from './my-custom-preloading-strategy.ts';
+//...
+@NgModule({
+    imports: [
+        RouterModule.forRoot(appRoutes, {
+            preloadingStrategy: MyCustomPreloadingStrategy
+        })
+    ]
+})
+export class AppRoutingModule {}
+</code></pre>
+        </section>
+    </article>
+    <article>
+        <section class="title">
+            <header>
+                <h1>That's all</h1>
+                <h4>Thank you</h4>
+            </header>
+        </section>
+    </article>
 </body>
 </html>

@@ -7,12 +7,19 @@ class Deck {
     private currentFragmentId: number;
 
     constructor(private element: HTMLElement, private slides: Slide[], private renderer: Renderer) {
-        this.currentSlideIndex = 0;
-        this.currentFragmentId = 0;
+        this.currentSlideIndex = -1;
+        this.currentFragmentId = -1;
     }
 
     show(slideId: string) {
-
+        slideId = slideId || this.slides[0].id;
+        console.log(`Show: ${slideId}`)
+        let slideIndex = this.slides.findIndex((slide) => { return slide.id === slideId; });
+        if (slideIndex === -1) {
+            throw new Error(`Slide ${slideId} not found!`);
+        }
+        this.renderer.setActiveSlide(this.slides[slideIndex], this.currentSlideIndex > -1 ? this.slides[this.currentSlideIndex] : null);
+        this.currentSlideIndex = slideIndex;
     }
 
     goToNext() {
@@ -21,7 +28,6 @@ class Deck {
         if (curInd < this.slides.length - 1) {
             let nextSlideId = this.slides[curInd + 1].id;
             routeHelpers.goTo(nextSlideId);
-            this.currentSlideIndex = curInd + 1;
         }
     }
     goToPrev() {
@@ -30,7 +36,6 @@ class Deck {
         if (curInd > 0) {
             let nextSlideId = this.slides[curInd - 1].id;
             routeHelpers.goTo(nextSlideId);
-            this.currentSlideIndex = curInd - 1;
         }
     }
     preview() {

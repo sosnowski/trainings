@@ -9,6 +9,7 @@ interface Slide {
     id: string;
     fragments: Fragment[];
     config: SlideConfig;
+    order: number;
 }
 
 export { Slide, SlideConfig };

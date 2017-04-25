@@ -5,11 +5,18 @@ import { Renderer } from './renderer';
 import { Router } from './router';
 
 let createSlide = (element: HTMLElement, fragments: Fragment[], index: number) : Slide => {
+    let slideElementId = `slide-${index}`;
+    if (element.id) {
+        slideElementId = element.id;
+    } else {
+        element.id = slideElementId;
+    }
     return {
         element: element,
         fragments: fragments,
-        id: `slide-${index}`,
-        config: {}
+        id: slideElementId,
+        config: {},
+        order: index
     };
 }
 
@@ -30,11 +37,10 @@ let parseSlide = (element: HTMLElement, index: number): Slide => {
 
 
 let parseDeck = (container: HTMLElement): Deck => {
-    let slides = Array.prototype.reduce.call(container.querySelectorAll('section'), (slides, element, index) => {
+    let slides = Array.prototype.reduce.call(container.querySelectorAll('article'), (slides, element, index) => {
         return [...slides, parseSlide(element, index)];
     }, []);
-    console.log(slides);
-    return new Deck(container, slides, new Renderer(container));
+    return new Deck(container, slides, new Renderer(container, slides));
 }
 
 export { parseDeck };

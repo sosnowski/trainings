@@ -1,3 +1,6 @@
+import 'prismjs';
+import 'prismjs/components/prism-typescript';
+
 import { Observable } from 'rxjs';
 import { Router, Route } from './router';
 import { Keyboard } from './keyboard';
