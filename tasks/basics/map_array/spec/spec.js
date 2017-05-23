@@ -41,29 +41,4 @@ describe("mapArray function", function() {
 			expect(arr).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
 		});
 	});
-
-	describe('Callback context', function () {
-		var arr, spy, newArray, ctx;
-
-		beforeEach(function () {
-			arr  = [1, 2, 3, 4, 5];
-			spy = jasmine.createSpy('callback').and.callFake(function (element) {
-				return element + this.by;
-			});
-			ctx = {
-				by: 2
-			};
-
-			newArray = APP.mapArray(arr, spy, ctx);
-		});
-
-
-		it('Should create proper results based on the context', function () {
-			expect(newArray).toEqual([3, 4, 5, 6, 7]);
-		});
-
-		it('Should call callback in a proper context', function () {
-			expect(spy.calls.first().object).toBe(ctx);
-		});
-	});
 });
