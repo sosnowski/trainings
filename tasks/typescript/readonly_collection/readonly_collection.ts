@@ -3,42 +3,34 @@ interface CollectionMapper<T> {
     (element: T, index: number, collection: ReadonlyCollection<T>) : T
 };
 
-class ReadonlyCollection<T> {
+class ReadonlyCollection {
 
-    private data: ReadonlyArray<T>;
+    private data;
 
-    constructor(...args: T[]) {
-        this.data = args;
+    constructor() {
+
     }
 
-    public get(index: number): T {
-        return this.data[index];
+    public get() {
+
     }
 
-    public toArray() : T[] {
-        return <Array<T>>this.data;
+    public toArray() {
     }
 
-    public add(...args: T[]): ReadonlyCollection<T> {
-        return new ReadonlyCollection<T>(...[...this.data, ...args]);
+    public add(){
+
     }
 
-    public remove(...args: T[]): ReadonlyCollection<T> {
-        let res = this.data.filter((element) => {
-            return args.indexOf(element) === -1;
-        });
-        return new ReadonlyCollection<T>(...res);
+    public remove(){
+
     }
 
-    public map(callback: CollectionMapper<T>) : ReadonlyCollection<T> {
-        let res = this.data.map((element, index) => {
-            return callback(element, index, this);
-        });
-        return new ReadonlyCollection<T>(...res);
+    public map() {
+
     }
 
-    get length(): number {
-        return this.data.length;
+    get length() {
     }
 }
 

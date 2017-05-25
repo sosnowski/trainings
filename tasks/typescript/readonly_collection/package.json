@@ -4,14 +4,14 @@
   "description": "",
   "main": "readonly_collection.js",
   "scripts": {
-    "test": "tsc && mocha"
+    "test": "tsc && node ./bin/run_tests.js",
+    "clean": "./node_modules/.bin/rimraf ./build"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@types/chai": "^3.5.2",
-    "@types/mocha": "^2.2.41",
-    "chai": "^3.5.0",
-    "mocha": "^3.4.1"
+    "@types/jasmine": "^2.5.47",
+    "jasmine": "^2.6.0",
+    "rimraf": "^2.6.1"
   }
 }

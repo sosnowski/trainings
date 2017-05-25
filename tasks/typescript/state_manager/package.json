@@ -1,0 +1,18 @@
+{
+  "name": "state_manager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tsc && node ./bin/run_tests.js",
+    "clean": "./node_modules/.bin/rimraf ./build"
+  },
+  "author": "Damian Sosnowski",
+  "license": "ISC",
+  "dependencies": {
+    "@types/jasmine": "^2.5.47",
+    "jasmine": "^2.6.0",
+    "jasmine-reporters": "^2.2.1",
+    "rimraf": "^2.6.1"
+  }
+}
