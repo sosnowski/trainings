@@ -57,10 +57,10 @@
             select.addEventListener('input', function (e) {
                 setClass(demoContainer, e.target.value, sizeCheck.checked, paddingCheck.checked);
             });
-            sizeCheck.addEventListener('input', function (e) {
+            sizeCheck.addEventListener('change', function (e) {
                 setClass(demoContainer, select.value, sizeCheck.checked, paddingCheck.checked);
             });
-            paddingCheck.addEventListener('input', function (e) {
+            paddingCheck.addEventListener('change', function (e) {
                 setClass(demoContainer, select.value, sizeCheck.checked, paddingCheck.checked);
             });
 
