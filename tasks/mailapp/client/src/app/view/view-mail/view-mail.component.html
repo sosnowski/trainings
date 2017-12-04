@@ -1,0 +1,12 @@
+<section *ngIf="mail">
+  <header>
+    <h3>{{mail.title}}</h3><span>{{mail.userName}} - {{mail.created | date:'short'}}</span>
+  </header>
+
+  <section class="content">
+    {{mail.content}}
+  </section>
+</section>
+<div class="loader" *ngIf="!mail">
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>

@@ -1,0 +1,14 @@
+<div class="loader" *ngIf="isLoading">
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</div>
+<form>
+  <mat-form-field>
+    <input matInput placeholder="Email title" name="title" [(ngModel)]="formData.title"/>
+  </mat-form-field>
+  <mat-form-field>
+    <textarea matInput placeholder="Email content" name="content" [(ngModel)]="formData.content"></textarea>
+  </mat-form-field>
+  <footer>
+    <button mat-raised-button color="primary" (click)="saveEmail()">Save</button>
+</footer>
+</form>

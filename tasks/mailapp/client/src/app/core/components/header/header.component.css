@@ -1,0 +1,27 @@
+:host {
+    height: 4vh;
+    display: block;
+    width: 100%;
+    background: #fff;
+    text-align: right;
+    padding:0;
+}
+
+button {
+    float: left;
+    margin-left: 0.1rem;
+    margin-top: 0.1rem;
+    margin-right: 0.3rem;
+}
+
+img {
+    height: 3.5vh;
+    width: 3.5vh;
+    margin-top: 0.25vh;
+}
+
+span {
+    margin-right: 2rem;
+    line-height: 4vh;
+    font-size: 1.6rem;
+}

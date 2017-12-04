@@ -1,0 +1,7 @@
+<button mat-raised-button color="basic" (click)="goToList()">All emails</button>
+<button mat-raised-button color="primary" (click)="goToNew()">New email</button>
+<section *ngIf="user">
+    <img src="{{user.avatar}}"/> <span>{{user.name}}</span>
+</section>
+
+<span *ngIf="!user">Loading user data...</span>

@@ -1,0 +1,37 @@
+:host {
+    display: block;
+    background: #fff;
+    width: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    padding: 1rem;
+    position: relative;
+}
+
+.loader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    bottom: 0;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.8);
+    z-index: 999;
+}
+
+.loader mat-progress-spinner {
+    margin: auto;
+    margin-top: 30%;
+}
+
+mat-form-field {
+    width: 100%;
+}
+
+textarea {
+    height: 30rem;
+}
+
+footer {
+    text-align: right;
+}
