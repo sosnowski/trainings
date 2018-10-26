@@ -17,5 +17,5 @@ https://slides.com/sosnowsd/angular-2-basics
 ### Angular - advanced
 https://slides.com/sosnowsd/angular-2-advanced
 
-##Tasks
+## Tasks
 Practical tasks and exercises can be found in ```./tasks``` directory.
